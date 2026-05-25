@@ -1,0 +1,73 @@
+<div class="container-fluid p-0">
+    <h4 class="fw-bold text-primary mb-4">Configuración de Empresa</h4>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h6 class="mb-0 fw-bold">Datos Corporativos</h6>
+                </div>
+                <div class="card-body">
+                    <form id="formEmpresa">
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label class="form-label">Razón Social / Nombre *</label>
+                                <input type="text" class="form-control" name="razon_social" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">NIT / Documento</label>
+                                <input type="text" class="form-control bg-light" id="readOnlyDoc" readonly>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" name="telefono">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Ciudad</label>
+                                <input type="text" class="form-control" name="ciudad">
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Dirección Fiscal</label>
+                            <input type="text" class="form-control" name="direccion">
+                        </div>
+
+                        <h6 class="fw-bold text-muted border-bottom pb-2 mb-3">Logo de la Empresa</h6>
+                        
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <div class="border rounded p-2 d-flex align-items-center justify-content-center bg-light" style="width: 100px; height: 100px;">
+                                    <img id="previewLogo" src="https://via.placeholder.com/100?text=Sin+Logo" class="img-fluid" style="max-height: 100%;">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Subir Nuevo Logo</label>
+                                <input type="file" class="form-control" name="logo" accept="image/*" onchange="module_configuracion.previewImage(this)">
+                                <small class="text-muted">Formatos: JPG, PNG.</small>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+                        
+                        <div class="text-end">
+                            <button type="button" class="btn btn-primary" onclick="module_configuracion.guardar()">
+                                <span class="material-icons align-middle fs-6 me-2">save</span> Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="alert alert-info border-0 shadow-sm">
+                <h6 class="fw-bold"><i class="material-icons align-middle me-2">info</i>Nota Importante</h6>
+                <p class="small mb-0">Esta información aparecerá automáticamente en el encabezado de todos tus documentos PDF (Estados de cuenta, Recibos, etc).</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,179 @@
+<div class="container-fluid p-0">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-0 text-primary fw-bold">Directorio de Clientes</h5>
+                <p class="fw-bold text-dark text-capitalize">CRM Inmobiliario</p>
+            </div>
+            <button class="btn btn-primary" onclick="module_clientes.abrirModalCrear()">
+                <span class="material-icons align-middle fs-6">person_add</span> Nuevo
+            </button>
+        </div>
+        
+        <div class="p-3 bg-light border-bottom">
+            <input type="text" id="buscadorCliente" class="form-control" placeholder="🔍 Buscar por nombre, cédula o teléfono...">
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Cliente</th>
+                            <th>Identificación</th>
+                            <th>Contacto Rápido</th>
+                            <th>Ubicación</th>
+                            <th class="text-end pe-4">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaClientesBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCliente" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Registrar Comprador</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formCliente">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Tipo Doc</label>
+                            <select class="form-select" name="tipo_documento">
+                                <option value="CC">Cédula (CC)</option>
+                                <option value="NIT">NIT</option>
+                                <option value="CE">Extranjería</option>
+                                <option value="PASAPORTE">Pasaporte</option>
+                            </select>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label">Número Documento *</label>
+                            <input type="text" class="form-control" name="numero_documento" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Primer Nombre *</label>
+                            <input type="text" class="form-control" name="primer_nombre" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Segundo Nombre</label>
+                            <input type="text" class="form-control" name="segundo_nombre">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Primer Apellido *</label>
+                            <input type="text" class="form-control" name="primer_apellido" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Segundo Apellido</label>
+                            <input type="text" class="form-control" name="segundo_apellido">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Celular (WhatsApp) *</label>
+                            <input type="text" class="form-control" name="phone" required placeholder="Ej: 3001234567">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label class="form-label">Dirección</label>
+                            <input type="text" class="form-control" name="address">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Ciudad</label>
+                            <input type="text" class="form-control" name="city">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="module_clientes.crearCliente()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEditarCliente" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title">Actualizar Datos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarCliente">
+                    <input type="hidden" id="editClienteId">
+                    
+                    <div class="alert alert-light border d-flex align-items-center">
+                        <span class="material-icons me-2 .text-dark">badge</span>
+                        <div>
+                            <small class=".text-dark d-block">Identificación (No editable)</small>
+                            <strong id="verDocumento"></strong>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Primer Nombre</label>
+                            <input type="text" class="form-control" id="editPrimerNombre" name="primer_nombre" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Segundo Nombre</label>
+                            <input type="text" class="form-control" id="editSegundoNombre" name="segundo_nombre">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Primer Apellido</label>
+                            <input type="text" class="form-control" id="editPrimerApellido" name="primer_apellido" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Segundo Apellido</label>
+                            <input type="text" class="form-control" id="editSegundoApellido" name="segundo_apellido">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Celular</label>
+                            <input type="text" class="form-control" id="editPhone" name="phone">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="editEmail" name="email">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="editAddress" name="address">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Ciudad</label>
+                            <input type="text" class="form-control" id="editCity" name="city">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="module_clientes.guardarEdicion()">Actualizar Datos</button>
+            </div>
+        </div>
+    </div>
+</div>

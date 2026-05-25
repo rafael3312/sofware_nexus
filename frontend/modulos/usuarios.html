@@ -1,0 +1,277 @@
+<div class="container-fluid p-0">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-0 text-primary fw-bold">Gestión de Personal</h5>
+                <p class="text-muted small mb-0">Administra empleados y sus permisos de acceso.</p>
+            </div>
+            
+            <button class="btn btn-primary btn-sm px-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalUsuario">
+                <span class="material-icons align-middle fs-6 me-1">person_add</span> Nuevo Empleado
+            </button>
+        </div>
+        
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0" id="tablaUsuarios">
+                    <thead class="bg-light text-secondary">
+                        <tr>
+                            <th class="ps-4">Nombre Completo</th>
+                            <th>Documento</th>
+                            <th>Usuario Acceso</th>
+                            <th>Estado</th>
+                            <th class="text-end pe-4">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaUsuariosBody">
+                        <!-- JS inserta filas aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- MODAL 1: CREAR USUARIO -->
+<!-- ========================================== -->
+<div class="modal fade" id="modalUsuario" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title fw-bold">Registrar Nuevo Colaborador</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formCrearUsuario">
+                    <h6 class="fw-bold text-muted mb-3 border-bottom pb-2">Datos Personales</h6>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold">Tipo Doc</label>
+                            <select class="form-select" name="tipo_documento">
+                                <option value="CC">Cédula (CC)</option>
+                                <option value="CE">Extranjería (CE)</option>
+                                <option value="PEP">PEP</option>
+                                <option value="PASAPORTE">Pasaporte</option>
+                            </select>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label small fw-bold">Número Documento *</label>
+                            <input type="text" class="form-control" name="numero_documento" required placeholder="Sin puntos ni espacios">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Primer Nombre *</label>
+                            <input type="text" class="form-control" name="primer_nombre" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Segundo Nombre</label>
+                            <input type="text" class="form-control" name="segundo_nombre">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Primer Apellido *</label>
+                            <input type="text" class="form-control" name="primer_apellido" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Segundo Apellido</label>
+                            <input type="text" class="form-control" name="segundo_apellido">
+                        </div>
+                    </div>
+
+                    <h6 class="fw-bold text-muted mb-3 border-bottom pb-2 mt-4">Credenciales de Acceso</h6>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Usuario Sistema *</label>
+                            <input type="text" class="form-control" name="username" required placeholder="Ej: jgarcia">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Email</label>
+                            <input type="email" class="form-control" name="email">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold">Contraseña Inicial *</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="material-icons fs-6">lock</i></span>
+                            <input type="password" class="form-control" name="password" required minlength="6">
+                        </div>
+                    </div>
+
+                    <!-- PERMISOS DE ACCESO -->
+                    <div class="mb-3 bg-light p-3 rounded border">
+                        <label class="form-label fw-bold d-block mb-2 text-primary">Asignar Permisos:</label>
+                        <div class="row g-2">
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="modules" value="proyectos" id="perm_proyectos">
+                                    <label class="form-check-label" for="perm_proyectos">Proyectos</label>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="modules" value="lotes" id="perm_lotes">
+                                    <label class="form-check-label" for="perm_lotes">Inventario</label>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="modules" value="clientes" id="perm_clientes">
+                                    <label class="form-check-label" for="perm_clientes">Clientes</label>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="modules" value="ventas" id="perm_ventas">
+                                    <label class="form-check-label" for="perm_ventas">Ventas</label>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="modules" value="pagos" id="perm_pagos">
+                                    <label class="form-check-label" for="perm_pagos">Cartera</label>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="modules" value="reportes" id="perm_reportes">
+                                    <label class="form-check-label" for="perm_reportes">Reportes</label>
+                                </div>
+                            </div>
+                            <!-- NUEVO CHECKBOX MAPA -->
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="modules" value="mapa" id="perm_mapa">
+                                    <label class="form-check-label" for="perm_mapa">Masterplan</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary fw-bold px-4" onclick="module_usuarios.crearUsuario()">Guardar Empleado</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- MODAL 2: EDITAR USUARIO -->
+<!-- ========================================== -->
+<div class="modal fade" id="modalEditarUsuario" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title fw-bold">Editar Empleado y Permisos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarUsuario">
+                    <input type="hidden" name="id" id="editUserId">
+                    
+                    <h6 class="fw-bold text-muted mb-3 border-bottom pb-2">Datos Personales</h6>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Primer Nombre *</label>
+                            <input type="text" class="form-control" name="primer_nombre" id="editPrimerNombre" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Segundo Nombre</label>
+                            <input type="text" class="form-control" name="segundo_nombre" id="editSegundoNombre">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Primer Apellido *</label>
+                            <input type="text" class="form-control" name="primer_apellido" id="editPrimerApellido" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Segundo Apellido</label>
+                            <input type="text" class="form-control" name="segundo_apellido" id="editSegundoApellido">
+                        </div>
+                    </div>
+
+                    <h6 class="fw-bold text-muted mb-3 border-bottom pb-2 mt-4">Acceso</h6>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Email</label>
+                        <input type="email" class="form-control" name="email" id="editEmail">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold">Nueva Contraseña</label>
+                        <input type="password" class="form-control" name="password" placeholder="Dejar en blanco para mantener la actual">
+                    </div>
+
+                    <!-- PERMISOS DE ACCESO (EDITAR) -->
+                    <!-- Aquí se agrega el checkbox para que aparezca al editar -->
+                    <div class="mb-3 bg-light p-3 rounded border">
+                        <label class="form-label fw-bold d-block mb-2 text-primary">Actualizar Permisos:</label>
+                        <div class="row g-2">
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="modules" value="proyectos" id="edit_perm_proyectos">
+                                    <label class="form-check-label" for="edit_perm_proyectos">Proyectos</label>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="modules" value="lotes" id="edit_perm_lotes">
+                                    <label class="form-check-label" for="edit_perm_lotes">Inventario</label>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="modules" value="clientes" id="edit_perm_clientes">
+                                    <label class="form-check-label" for="edit_perm_clientes">Clientes</label>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="modules" value="ventas" id="edit_perm_ventas">
+                                    <label class="form-check-label" for="edit_perm_ventas">Ventas</label>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="modules" value="pagos" id="edit_perm_pagos">
+                                    <label class="form-check-label" for="edit_perm_pagos">Cartera</label>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="modules" value="reportes" id="edit_perm_reportes">
+                                    <label class="form-check-label" for="edit_perm_reportes">Reportes</label>
+                                </div>
+                            </div>
+                            <!-- NUEVO CHECKBOX MAPA (EDITAR) -->
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="modules" value="mapa" id="edit_perm_mapa">
+                                    <label class="form-check-label" for="edit_perm_mapa">Masterplan</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary fw-bold px-4" onclick="module_usuarios.guardarEdicion()">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>

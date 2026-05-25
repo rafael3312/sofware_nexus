@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nexus Urbanizaciones | Gestión Inmobiliaria</title>
+    <meta name="description" content="Plataforma líder para la gestión de proyectos urbanísticos, lotes y ventas.">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/index.css">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5 { font-family: 'Poppins', sans-serif; }
+        
+        .navbar-brand { font-weight: 700; letter-spacing: -0.5px; }
+        
+        .hero {
+            background: linear-gradient(135deg, rgba(13, 47, 80, 0.95), rgba(30, 60, 114, 0.9)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            min-height: 85vh; /* Más alto para impacto */
+        }
+
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            background: #fff;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+        }
+
+        .testimonial-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            border-left: 5px solid #0d6efd;
+        }
+
+        .cta {
+            background: linear-gradient(45deg, #0d6efd, #0dcaf0);
+            color: white;
+            padding: 5rem 0;
+        }
+        
+        footer { background: #0d2f50; color: #adb5bd; }
+        footer a { color: #adb5bd; text-decoration: none; transition: 0.2s; }
+        footer a:hover { color: #fff; }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-3" style="background-color: rgba(13, 47, 80, 0.95); backdrop-filter: blur(10px);">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <span class="material-icons me-2 text-info">domain</span>
+                Nexus IT solutions
+            </a>
+            <!-- <a class="navbar-brand d-flex align-items-center" href="#">
+            <img src="/frontend/img/logo.png" >
+             Nexus IT solutions </a> -->
+
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link active" href="#inicio">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#funcionalidades">Soluciones</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#nosotros">Empresa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#testimonios">Clientes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#faq">Ayuda</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="login.html" class="btn btn-outline-info rounded-pill px-4">Acceso Clientes</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero d-flex align-items-center justify-content-center text-center" id="inicio">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="zoom-in" data-aos-duration="1000">
+                    <h1 class="display-3 fw-bold text-white mb-4">Gestión Inmobiliaria <span class="text-info">Inteligente</span></h1>
+                    <p class="lead text-white-50 mb-5 fs-4">
+                        Centraliza proyectos, lotes, ventas y cartera en una sola plataforma en la nube. Diseñada para inmobiliarias que quieren crecer.
+                    </p>
+                    <div class="d-flex gap-3 justify-content-center flex-column flex-sm-row">
+                        <button class="btn btn-info btn-lg px-5 py-3 fw-bold rounded-pill text-white shadow-lg" onclick="window.location.href='login.html'">
+                            Probar Gratis
+                        </button>
+                        <button class="btn btn-outline-light btn-lg px-5 py-3 fw-bold rounded-pill" onclick="window.location.href='#funcionalidades'">
+                            Ver Demo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-5 bg-light" id="funcionalidades">
+        <div class="container py-5">
+            <div class="row text-center mb-5">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="fw-bold text-dark display-6">Todo lo que necesitas para vender más</h2>
+                    <p class="text-muted lead">Automatiza tareas repetitivas y enfócate en cerrar negocios.</p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card p-4 h-100 feature-card shadow-sm">
+                        <div class="mb-3 text-primary">
+                            <span class="material-icons display-4">apartment</span>
+                        </div>
+                        <h4 class="fw-bold mb-3">Gestión de Proyectos</h4>
+                        <p class="text-muted">Control total sobre etapas, manzanas y disponibilidad de unidades en tiempo real.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card p-4 h-100 feature-card shadow-sm">
+                        <div class="mb-3 text-success">
+                            <span class="material-icons display-4">point_of_sale</span>
+                        </div>
+                        <h4 class="fw-bold mb-3">Ventas y Cartera</h4>
+                        <p class="text-muted">Genera planes de pago automáticos, controla cuotas vencidas y emite recibos al instante.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card p-4 h-100 feature-card shadow-sm">
+                        <div class="mb-3 text-warning">
+                            <span class="material-icons display-4">pie_chart</span>
+                        </div>
+                        <h4 class="fw-bold mb-3">Dashboard Gerencial</h4>
+                        <p class="text-muted">Toma decisiones basadas en datos. Gráficos de ventas, recaudo y proyección financiera.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card p-4 h-100 feature-card shadow-sm">
+                        <div class="mb-3 text-danger">
+                            <span class="material-icons display-4">cloud_upload</span>
+                        </div>
+                        <h4 class="fw-bold mb-3">Documentos en la Nube</h4>
+                        <p class="text-muted">Sube contratos, planos y fotos directamente a la nube. Accede desde cualquier lugar.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="card p-4 h-100 feature-card shadow-sm">
+                        <div class="mb-3 text-info">
+                            <span class="material-icons display-4">groups</span>
+                        </div>
+                        <h4 class="fw-bold mb-3">CRM de Clientes</h4>
+                        <p class="text-muted">Base de datos centralizada de compradores con historial de pagos y contacto vía WhatsApp.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="600">
+                    <div class="card p-4 h-100 feature-card shadow-sm">
+                        <div class="mb-3 text-dark">
+                            <span class="material-icons display-4">security</span>
+                        </div>
+                        <h4 class="fw-bold mb-3">Roles y Permisos</h4>
+                        <p class="text-muted">Tú decides qué ven tus empleados. Crea usuarios con acceso restringido por módulos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5" id="nosotros">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right">
+                    <div class="pe-lg-5">
+                        <h6 class="text-uppercase text-primary fw-bold mb-2">Sobre Nexus</h6>
+                        <h2 class="display-6 fw-bold mb-4">Transformamos la manera de vender propiedad raíz</h2>
+                        <p class="lead text-muted mb-4">
+                            Nacimos con la misión de eliminar el caos de las hojas de cálculo. Nexus es la herramienta definitiva para constructoras que buscan eficiencia y control total.
+                        </p>
+                        <div class="row g-4 mt-4">
+                            <div class="col-6">
+                                <div class="border-start border-4 border-primary ps-3">
+                                    <h2 class="fw-bold mb-0">500+</h2>
+                                    <p class="text-muted small">Proyectos Gestionados</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="border-start border-4 border-success ps-3">
+                                    <h2 class="fw-bold mb-0">$15M</h2>
+                                    <p class="text-muted small">En Recaudos Procesados</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" 
+                             class="img-fluid rounded-4 shadow-lg" alt="Oficina Moderna">
+                        <div class="position-absolute bottom-0 start-0 bg-white p-4 rounded-3 shadow m-4 d-none d-md-block">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="bg-success text-white rounded-circle p-2">
+                                    <span class="material-icons">verified</span>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-0">Soporte 24/7</h6>
+                                    <small class="text-muted">Siempre contigo</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-white" id="testimonios">
+        <div class="container py-5">
+            <h2 class="text-center fw-bold mb-5">Confían en nosotros</h2>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="testimonial-card h-100">
+                        <div class="mb-3 text-warning">
+                            <span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span>
+                        </div>
+                        <p class="fst-italic text-muted">"Antes perdíamos horas cuadrando caja. Con Nexus, en un clic sé exactamente quién me debe y cuánto he vendido."</p>
+                        <div class="d-flex align-items-center mt-4">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" class="rounded-circle me-3" width="50">
+                            <div>
+                                <h6 class="fw-bold mb-0">Carlos Mendoza</h6>
+                                <small class="text-muted">CEO, Inmobiliaria Horizonte</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="testimonial-card h-100">
+                        <div class="mb-3 text-warning">
+                            <span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star_half</span>
+                        </div>
+                        <p class="fst-italic text-muted">"La facilidad para crear empleados y asignarles permisos específicos nos dio la seguridad que necesitábamos."</p>
+                        <div class="d-flex align-items-center mt-4">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" class="rounded-circle me-3" width="50">
+                            <div>
+                                <h6 class="fw-bold mb-0">Ana Ruiz</h6>
+                                <small class="text-muted">Gerente, Constructora Arcos</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="testimonial-card h-100">
+                        <div class="mb-3 text-warning">
+                            <span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span>
+                        </div>
+                        <p class="fst-italic text-muted">"Poder ver el mapa de lotes con los colores de vendido o disponible en tiempo real es una maravilla para las ventas."</p>
+                        <div class="d-flex align-items-center mt-4">
+                            <img src="https://randomuser.me/api/portraits/men/85.jpg" class="rounded-circle me-3" width="50">
+                            <div>
+                                <h6 class="fw-bold mb-0">Jorge Torres</h6>
+                                <small class="text-muted">Ventas, Grupo Terra</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-light" id="faq">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="text-center mb-5">
+                        <h2 class="fw-bold">Preguntas Frecuentes</h2>
+                        <p class="text-muted">Respuestas rápidas a tus dudas</p>
+                    </div>
+                    <div class="accordion accordion-flush bg-white rounded shadow-sm p-3" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    ¿Necesito instalar algo en mi PC?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted">No. Nexus es 100% web (en la nube). Solo necesitas un navegador y conexión a internet.</div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    ¿Puedo importar mis datos actuales?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted">Sí, ofrecemos herramientas de migración para traer tus clientes y lotes desde Excel de forma masiva.</div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    ¿Mis datos están seguros?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted">Absolutamente. Usamos encriptación SSL bancaria y realizamos copias de seguridad diarias automáticas.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta text-center">
+        <div class="container" data-aos="fade-up">
+            <h2 class="fw-bold mb-4">¿Listo para organizar tu inmobiliaria?</h2>
+            <p class="lead mb-5 opacity-75">Únete hoy y empieza a gestionar tus proyectos como un experto.</p>
+            <button class="btn btn-light btn-lg px-5 py-3 fw-bold rounded-pill shadow" onclick="window.location.href='login.html'">
+                Crear Cuenta Gratis
+            </button>
+        </div>
+    </section>
+
+    <footer class="pt-5 pb-3">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h5 class="text-white mb-3 d-flex align-items-center">
+                        <span class="material-icons me-2">domain</span> Nexus IT
+                    </h5>
+                    <p class="small text-white-50">Plataforma integral de gestión inmobiliaria. Simplificamos la administración para que tú te enfoques en crecer.</p>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="text-white mb-3">Producto</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Precios</a></li>
+                        <li><a href="#">Características</a></li>
+                        <li><a href="#">Casos de éxito</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="text-white mb-3">Compañía</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Nosotros</a></li>
+                        <li><a href="#">Contacto</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h6 class="text-white mb-3">Suscríbete</h6>
+                    <form class="d-flex gap-2">
+                        <input type="email" class="form-control form-control-sm" placeholder="Tu correo">
+                        <button class="btn btn-info btn-sm text-white">Enviar</button>
+                    </form>
+                </div>
+            </div>
+            <hr class="border-secondary my-4">
+            <div class="text-center text-white-50 small">
+                &copy; 2025 Nexus IT Solutions. Desarrollado por NEXUS IT.
+            </div>
+        </div>
+    </footer>
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 100 }); // Iniciar animaciones
+    </script>
+</body>
+</html>

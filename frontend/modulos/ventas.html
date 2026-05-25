@@ -1,0 +1,209 @@
+<div class="container-fluid p-0">
+    <h5 class="fw-bold text-primary mb-4">Gestión de Ventas y Contratos</h5>
+    
+    <!-- Botón Principal -->
+    <button class="btn btn-success mb-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalVenta">
+        <i class="material-icons align-middle fs-6 me-1">point_of_sale</i> Nueva Venta
+    </button>
+
+    <!-- Tabla Historial -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Fecha</th>
+                            <th>Unidad / Proyecto</th>
+                            <th>Cliente</th>
+                            <th>Valor Final</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaVentasBody">
+                        <!-- JS inserta filas aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL 1: REGISTRAR VENTA -->
+    <!-- ========================================== -->
+    <div class="modal fade" id="modalVenta" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title fw-bold">Registrar Nueva Venta</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formVenta">
+                        <!-- SECCIÓN 1: PROPIEDAD -->
+                        <h6 class="fw-bold text-muted border-bottom pb-2 mb-3">1. Selección de Propiedad</h6>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Proyecto *</label>
+                                <select id="selectProyectoVenta" class="form-select" required>
+                                    <option value="">Cargando...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Unidad Disponible *</label>
+                                <select name="unit_id" id="selectUnidadVenta" class="form-select" required disabled>
+                                    <option value="">Seleccione Proyecto primero</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN 2: CLIENTE -->
+                        <h6 class="fw-bold text-muted border-bottom pb-2 mt-4 mb-3">2. Datos del Comprador</h6>
+                        
+                        <div class="input-group mb-2">
+                            <input type="text" id="buscarCedulaInput" class="form-control" placeholder="Ingrese Cédula o NIT del cliente">
+                            <button class="btn btn-outline-secondary" type="button" onclick="module_ventas.buscarCliente()">
+                                <i class="material-icons align-middle fs-6">search</i> Buscar
+                            </button>
+                            <button class="btn btn-outline-primary fw-bold" type="button" onclick="module_ventas.abrirModalClienteRapido()">
+                                <i class="material-icons align-middle fs-6 me-1">person_add</i> Nuevo Cliente
+                            </button>
+                        </div>
+                        
+                        <input type="hidden" name="client_id" id="clientIdHidden" required>
+                        
+                        <div id="infoCliente" class="alert alert-success border d-none p-2 d-flex align-items-center">
+                            <i class="material-icons me-2 text-success">check_circle</i>
+                            <div>
+                                <small class="text-muted d-block">Cliente Seleccionado:</small>
+                                <strong id="nombreClienteDisplay" class="fs-6">Nombre Cliente</strong>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN 3: NEGOCIO -->
+                        <h6 class="fw-bold text-muted border-bottom pb-2 mt-4 mb-3">3. Condiciones del Negocio</h6>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Precio de Lista</label>
+                                <!-- AQUÍ ESTABA EL ERROR: Faltaba name="original_price" -->
+                                <input type="number" id="precioLista" name="original_price" class="form-control bg-light fw-bold text-end" readonly value="0">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Descuento ($)</label>
+                                <input type="number" id="descuentoInput" name="discount" class="form-control text-end" value="0" min="0">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label text-success fw-bold">Precio Final Venta</label>
+                                <input type="text" id="precioFinalDisplay" class="form-control-plaintext fw-bold text-success text-end fs-5" readonly value="$0">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Método de Pago *</label>
+                                <select name="payment_method" id="selectMetodoPago" class="form-select" required onchange="module_ventas.toggleCamposCredito()">
+                                    <option value="contado">Contado</option>
+                                    <option value="credito">Crédito / Financiado</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Cuota Inicial / Abono ($) *</label>
+                                <input type="number" id="inputInicial" name="down_payment" class="form-control text-end" required value="0">
+                            </div>
+                        </div>
+
+                        <!-- CAMPOS CRÉDITO -->
+                        <div id="configCredito" class="bg-light p-3 mb-3 rounded border d-none">
+                            <h6 class="text-primary fw-bold small mb-2"><i class="material-icons align-middle fs-6 me-1">date_range</i> Configuración del Crédito</h6>
+                            <div class="row align-items-end">
+                                <div class="col-md-4">
+                                    <label class="form-label small">N° Cuotas</label>
+                                    <input type="number" id="inputCuotas" name="num_quotas" class="form-control form-control-sm" placeholder="Ej: 12">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label small">Inicio Pagos</label>
+                                    <input type="date" name="start_date" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <small class="text-muted d-block">Cuota Mensual Aprox.</small>
+                                    <h5 class="fw-bold text-dark mb-0" id="valorCuotaDisplay">$0</h5>
+                                </div>
+                            </div>
+                            <div class="text-end mt-2">
+                                <small class="text-muted">Saldo a financiar: <span id="saldoFinanciarDisplay" class="fw-bold text-danger">$0</span></small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Fecha Contrato *</label>
+                            <input type="date" name="contract_date" class="form-control" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Notas / Observaciones</label>
+                            <textarea name="notes" class="form-control" rows="2" placeholder="Detalles adicionales..."></textarea>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success fw-bold px-4" onclick="module_ventas.guardarVenta()">
+                        <i class="material-icons align-middle fs-6 me-1">save</i> Finalizar Venta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL 2: CREAR CLIENTE RÁPIDO -->
+    <!-- ========================================== -->
+    <div class="modal fade" id="modalClienteRapido" tabindex="-1" style="z-index: 1060;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg border-primary border-2">
+                <div class="modal-header bg-primary text-white py-2">
+                    <h6 class="modal-title fw-bold">
+                        <i class="material-icons align-middle fs-6 me-2">person_add</i> Nuevo Cliente Rápido
+                    </h6>
+                    <button type="button" class="btn-close btn-close-white" onclick="module_ventas.cerrarModalCliente()"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formClienteRapido">
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Cédula / NIT *</label>
+                                <input type="text" name="numero_documento" class="form-control form-control-sm" required>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Celular / Tel *</label>
+                                <input type="text" name="phone" class="form-control form-control-sm" required>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Nombre(s) *</label>
+                                <input type="text" name="primer_nombre" class="form-control form-control-sm" required>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Apellido(s) *</label>
+                                <input type="text" name="primer_apellido" class="form-control form-control-sm" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label small">Email</label>
+                                <input type="email" name="email" class="form-control form-control-sm" placeholder="opcional">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer bg-light py-2">
+                    <button type="button" class="btn btn-sm btn-link text-decoration-none text-muted" onclick="module_ventas.cerrarModalCliente()">Cancelar</button>
+                    <button type="button" class="btn btn-sm btn-primary fw-bold px-3" onclick="module_ventas.guardarClienteRapido()">
+                        Guardar y Seleccionar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,176 @@
+<div class="container-fluid p-0">
+    <!-- BARRA DE HERRAMIENTAS Y FILTROS -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body d-flex flex-wrap gap-3 justify-content-between align-items-center">
+            <div>
+                <h5 class="fw-bold text-primary mb-1">Inventario de Unidades</h5>
+                <p class="text-muted small mb-0">Gestiona lotes, precios y estados</p>
+            </div>
+            
+            <div class="d-flex gap-2 align-items-center flex-wrap">
+                <!-- Filtro de Proyecto -->
+                <select id="filtroProyecto" class="form-select" onchange="inventario.aplicarFiltros()">
+    <option value="">Todos los Proyectos</option>
+    <option value="1">Proyecto A</option> 
+    <option value="2">Proyecto B</option>
+</select>
+
+                <!-- NUEVO: Filtro de Estado -->
+                <select id="filtroEstado" class="form-select form-select-sm" style="max-width: 150px;" onchange="module_lotes.aplicarFiltros()">
+                    <option value="todos">Todos los Estados</option>
+                    <option value="disponible">Disponibles</option>
+                    <option value="separado">Separados</option>
+                    <option value="vendido">Vendidos</option>
+                </select>
+
+                <div class="vr mx-2"></div>
+
+                <button class="btn btn-primary btn-sm px-3" onclick="module_lotes.abrirModalCrear()">
+                    <span class="material-icons align-middle fs-6 me-1">add</span> Nuevo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GRID DONDE APARECEN LOS LOTES -->
+    <div class="row g-3" id="gridLotes">
+        <!-- Aquí se inyectan las tarjetas vía JS -->
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- MODAL 1: CREAR / EDITAR LOTE -->
+<!-- ========================================== -->
+<div class="modal fade" id="modalLote" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Gestión de Unidad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formLote">
+                    <!-- Si estamos editando, aquí va el ID (oculto) -->
+                    <input type="hidden" name="id" id="editLoteId"> 
+
+                    <div class="mb-3">
+                        <label class="form-label">Proyecto *</label>
+                        <select name="project_id" id="selectProyectoForm" class="form-select" required>
+                            <option value="">Cargando...</option>
+                        </select>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Código (Manzana-Lote) *</label>
+                            <input type="text" name="unit_code" id="editCode" class="form-control" placeholder="Ej: A-101" required>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Precio de Lista *</label>
+                            <input type="number" name="price" id="editPrice" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Área (m²)</label>
+                            <input type="number" name="area" id="editArea" class="form-control" step="0.01">
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Tipo Inmueble</label>
+                            <select name="type" id="editType" class="form-select">
+                                <option value="lote">Lote</option>
+                                <option value="casa">Casa</option>
+                                <option value="apartamento">Apartamento</option>
+                                <option value="local">Local Comercial</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Estado Actual</label>
+                        <select name="status" id="editStatus" class="form-select bg-light">
+                            <option value="disponible">Disponible</option>
+                            <option value="separado">Separado</option>
+                            <option value="vendido">Vendido</option>
+                            <option value="cedido">Cedido / Novedad</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Descripción / Observaciones</label>
+                        <textarea name="description" id="editDesc" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Galería de Fotos</label>
+                        <input type="file" name="imagenes" multiple class="form-control" accept="image/*">
+                        
+                        <!-- Contenedor para ver fotos existentes al editar -->
+                        <div id="galeriaEdicion" class="d-flex flex-wrap gap-2 mt-2"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="module_lotes.guardarLote()">Guardar Datos</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- MODAL 2: SEPARAR LOTE (NUEVO) -->
+<!-- ========================================== -->
+<div class="modal fade" id="modalSeparar" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content border-warning border-2">
+            <div class="modal-header bg-warning bg-opacity-10">
+                <h5 class="modal-title fw-bold text-dark">
+                    <span class="material-icons align-middle me-2">lock_clock</span>
+                    Separar Unidad
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p class="small text-muted mb-3">
+                    El lote cambiará a estado <strong>"Separado"</strong>. Debes asignar un cliente y una fecha límite para concretar la venta.
+                </p>
+
+                <form id="formSeparar">
+                    <input type="hidden" id="separarLoteId">
+                    
+                    <!-- Buscador de Cliente -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Cliente *</label>
+                        <div class="input-group">
+                            <input type="text" id="buscarClienteSeparar" class="form-control" placeholder="Escribe Cédula o Nombre...">
+                            <button type="button" class="btn btn-outline-secondary" onclick="module_lotes.buscarCliente()">
+                                <i class="material-icons fs-6">search</i>
+                            </button>
+                        </div>
+                        <!-- Lista desplegable de resultados -->
+                        <select id="selectClienteSeparar" class="form-select mt-2" required size="3" style="display:none;"></select>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Monto Separación ($) *</label>
+                            <input type="number" id="montoSeparacion" class="form-control" required placeholder="0">
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Válido Hasta *</label>
+                            <input type="date" id="fechaLimiteSeparacion" class="form-control" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-link text-muted text-decoration-none" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-warning fw-bold px-4" onclick="module_lotes.confirmarSeparacion()">
+                    Confirmar Separación
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

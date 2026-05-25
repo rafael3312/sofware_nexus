@@ -1,0 +1,58 @@
+<div class="container-fluid p-0 h-100 d-flex flex-column">
+    <!-- Cabecera y Filtros -->
+    <div class="card border-0 shadow-sm mb-3 flex-shrink-0">
+        <div class="card-body py-3 d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h5 class="fw-bold text-primary mb-0">Masterplan Interactivo</h5>
+                <small class="text-muted">Visualización gráfica de lotes</small>
+            </div>
+            
+            <div class="d-flex align-items-center gap-3">
+                <select id="selectProyectoMapa" class="form-select" style="min-width: 200px;">
+                    <option value="">Cargando proyectos...</option>
+                </select>
+                
+                <!-- Leyenda de Colores ACTUALIZADA -->
+                <div class="d-flex gap-2 small">
+                    <!-- Vendido: Verde -->
+                    <span class="badge bg-success border text-white d-flex align-items-center">
+                        <span class="d-inline-block rounded-circle bg-white me-1" style="width:8px; height:8px;"></span> Vendido
+                    </span>
+                    <!-- Separado: Amarillo -->
+                    <span class="badge bg-warning text-dark border d-flex align-items-center">
+                        <span class="d-inline-block rounded-circle bg-dark me-1" style="width:8px; height:8px;"></span> Separado
+                    </span>
+                    <!-- Novedad: Rojo -->
+                    <span class="badge bg-danger border text-white d-flex align-items-center">
+                        <span class="d-inline-block rounded-circle bg-white me-1" style="width:8px; height:8px;"></span> Novedad
+                    </span>
+                    <!-- Disponible: Gris -->
+                    <span class="badge bg-light text-dark border d-flex align-items-center">
+                        <span class="d-inline-block rounded-circle bg-secondary me-1" style="width:8px; height:8px;"></span> Disponible
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenedor del Mapa SVG -->
+    <div class="card border-0 shadow-sm flex-grow-1 overflow-hidden position-relative" style="min-height: 500px;">
+        
+        <div class="card-body p-0 bg-light d-flex justify-content-center align-items-center overflow-auto" id="mapaContainer">
+            <div class="text-center text-muted py-5">
+                <span class="material-icons fs-1 mb-2">map</span>
+                <p>Selecciona un proyecto que tenga un plano cargado.</p>
+            </div>
+        </div>
+        
+        <!-- Tooltip -->
+        <div id="loteTooltip" class="position-absolute bg-white shadow rounded p-3 d-none border" style="width: 250px; z-index: 1000; pointer-events: none;">
+            <h6 class="fw-bold mb-1" id="tooltipCode">Lote X</h6>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="badge" id="tooltipStatus">Estado</span>
+                <small class="fw-bold" id="tooltipArea">0 m²</small>
+            </div>
+            <h5 class="text-primary fw-bold mb-0" id="tooltipPrice">$0</h5>
+        </div>
+    </div>
+</div>
